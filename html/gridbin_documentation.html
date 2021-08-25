@@ -1,0 +1,289 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>gridbin documentation</title><meta name="generator" content="MATLAB 9.10"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-08-25"><meta name="DC.source" content="gridbin_documentation.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1><tt>gridbin</tt> documentation</h1><!--introduction--><p><tt>gridbin</tt> is a fast way to bin lots of scattered data into a gridded format. This function is similar to griddata with the nearest-neighbor option, except that gridbin only produces finite values in grid cells that contain finite scattered measurements. This function uses accumarray to calculate the mean (or other statistics) of all scattered data within each grid cell.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">Example 1</a></li><li><a href="#9">Example 2: Number of data points</a></li><li><a href="#10">Example 3: Other statistics</a></li><li><a href="#11">Author Info</a></li></ul></div><h2 id="1">Syntax</h2><pre>vq = gridbin(x,y,v,xq,yq)
+vq = gridbin(...,@func)
+[vq,N] = gridbin(...)</pre><h2 id="2">Description</h2><p><tt>vq = gridbin(x,y,v,xq,yq)</tt> produces a 2D grid of values <tt>vq</tt> at the coordinates <tt>xq,yq</tt>. Inputs <tt>x,y,v</tt> may be scattered data, and the output <tt>vq</tt> is the mean of all scattered values <tt>v</tt> within each spatial bin.</p><p><tt>vq = gridbin(...,@func)</tt> applies any function <tt>@func</tt> to the <tt>v</tt> data. By default, <tt>@func</tt> is <tt>@mean</tt>, meaning that vq contains the mean of all values <tt>v</tt> within each spatial bin.</p><p><tt>[vq,N] = gridbin(...)</tt> also returns a grid <tt>N</tt> containing the number of observations <tt>v</tt> in each bin.</p><h2 id="3">Example 1</h2><p>Consider this gridded data:</p><pre class="codeinput"><span class="comment">% Load some sample data:</span>
+[X,Y,Z] = peaks(500);
+
+figure
+pcolor(X,Y,Z)
+shading <span class="string">interp</span>
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_01.png" alt=""> <p>For this example, we'll sample the peaks data at 1000 scattered point that will roughly follow a sinudoid:</p><pre class="codeinput">N = 1000; <span class="comment">% number of scattered data points</span>
+xi = 6*(rand(N,1)-.5);
+yi = 2*sin(xi*2) + 0.5*randn(size(xi));
+zi = interp2(X,Y,Z,xi,yi);
+
+hold <span class="string">on</span>
+plot(xi,yi,<span class="string">'k.'</span>)
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_02.png" alt=""> <p>Here's what the scattered data looks like by itself:</p><pre class="codeinput">figure
+scatter(xi,yi,15,zi,<span class="string">'filled'</span>,<span class="string">'MarkerEdgeColor'</span>,.5*[1 1 1]);
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_03.png" alt=""> <p>Now take the mean of all scattered points on a grid of resolution 0.25:</p><pre class="codeinput">res = 0.25; <span class="comment">% resolution of the grid</span>
+xs = -4:res:4;
+ys = 4:-res:-4;
+zs = gridbin(xi,yi,zi,xs,ys);
+
+figure
+h=imagesc(xs,ys,zs);
+h.AlphaData = isfinite(zs);
+axis <span class="string">xy</span> <span class="string">image</span>
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_04.png" alt=""> <p>If you have the Image Processing toolbox, you can try filling in the missing pixels with <tt>regionfill</tt>:</p><pre class="codeinput">zs_filled = regionfill(zs,isnan(zs));
+
+figure
+imagesc(xs,ys,zs_filled)
+axis <span class="string">xy</span> <span class="string">image</span>
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_05.png" alt=""> <p>And let's put it all together in one plot:</p><pre class="codeinput">figure
+subplot(2,2,1)
+scatter(xi,yi,15,zi,<span class="string">'filled'</span>)
+title <span class="string">'original scattered, interpolated data'</span>
+axis <span class="string">equal</span> <span class="string">off</span>
+axis([-1 1 -1 1]*3)
+
+subplot(2,2,2)
+pcolor(X,Y,Z)
+shading <span class="string">interp</span>
+title <span class="string">'(original full resolution data)'</span>
+axis <span class="string">equal</span> <span class="string">off</span>
+axis([-1 1 -1 1]*3)
+
+subplot(2,2,3)
+h=imagesc(xs,ys,zs);
+h.AlphaData = isfinite(zs);
+axis <span class="string">xy</span> <span class="string">off</span>
+title <span class="string">'gridbin from scattered data'</span>
+axis <span class="string">equal</span>
+axis([-1 1 -1 1]*3)
+
+subplot(2,2,4)
+imagesc(xs,ys,zs_filled)
+axis <span class="string">xy</span> <span class="string">off</span>
+title <span class="string">'gridbin filled'</span>
+axis <span class="string">equal</span>
+axis([-1 1 -1 1]*3)
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_06.png" alt=""> <h2 id="9">Example 2: Number of data points</h2><p>An optional second output from the <tt>gridbin</tt> function gives the number of observations in each grid cell. So in the example above, we could have request the second output from the <tt>gridbin</tt> function like this:</p><pre class="codeinput">[zs,N] = gridbin(xi,yi,zi,xs,ys);
+
+figure
+imagesc(xs,ys,N)
+axis <span class="string">xy</span> <span class="string">image</span>
+title <span class="string">'number of scattered datapoints in each grid cell.'</span>
+colorbar
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_07.png" alt=""> <h2 id="10">Example 3: Other statistics</h2><p>The <tt>gridbin</tt> function uses <tt>accumarray</tt> to accumulate the statistics of all scattered points within each grid cell. By default <tt>gridbin</tt> assumes you want the mean z value in each grid cell, but you can just as easily request other statistics, like standard deviation:</p><pre class="codeinput">z_std = gridbin(xi,yi,zi,xs,ys,@std);
+
+figure
+imagesc(xs,ys,z_std)
+axis <span class="string">xy</span> <span class="string">image</span>
+title <span class="string">'standard deviation of all data points in each grid cell.'</span>
+colorbar
+colormap <span class="string">cool</span>
+</pre><img vspace="5" hspace="5" src="gridbin_documentation_08.png" alt=""> <h2 id="11">Author Info</h2><p>This function was written by Chad A. Greene of NASA's Jet Propulsion Laboratory, August 2021.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% |gridbin| documentation 
+% |gridbin| is a fast way to bin lots of scattered data into a gridded format. 
+% This function is similar to griddata with the nearest-neighbor option,
+% except that gridbin only produces finite values in grid cells that
+% contain finite scattered measurements. This function uses accumarray to
+% calculate the mean (or other statistics) of all scattered data within
+% each grid cell. 
+% 
+%% Syntax
+% 
+%  vq = gridbin(x,y,v,xq,yq) 
+%  vq = gridbin(...,@func) 
+%  [vq,N] = gridbin(...) 
+% 
+%% Description
+% 
+% |vq = gridbin(x,y,v,xq,yq)| produces a 2D grid of values |vq| at the coordinates 
+% |xq,yq|. Inputs |x,y,v| may be scattered data, and the output |vq| is the mean
+% of all scattered values |v| within each spatial bin. 
+% 
+% |vq = gridbin(...,@func)| applies any function |@func| to the |v| data. By
+% default, |@func| is |@mean|, meaning that vq contains the mean of all values
+% |v| within each spatial bin. 
+% 
+% |[vq,N] = gridbin(...)| also returns a grid |N| containing the number of
+% observations |v| in each bin. 
+
+%% Example 1
+% Consider this gridded data: 
+
+% Load some sample data: 
+[X,Y,Z] = peaks(500); 
+
+figure
+pcolor(X,Y,Z)
+shading interp
+
+%%
+% For this example, we'll sample the peaks data at 1000 scattered point
+% that will roughly follow a sinudoid: 
+
+N = 1000; % number of scattered data points
+xi = 6*(rand(N,1)-.5); 
+yi = 2*sin(xi*2) + 0.5*randn(size(xi)); 
+zi = interp2(X,Y,Z,xi,yi); 
+
+hold on
+plot(xi,yi,'k.')
+
+%% 
+% Here's what the scattered data looks like by itself: 
+
+figure
+scatter(xi,yi,15,zi,'filled','MarkerEdgeColor',.5*[1 1 1]); 
+
+%%
+% Now take the mean of all scattered points on a grid of resolution 0.25: 
+
+res = 0.25; % resolution of the grid
+xs = -4:res:4; 
+ys = 4:-res:-4; 
+zs = gridbin(xi,yi,zi,xs,ys); 
+
+figure
+h=imagesc(xs,ys,zs); 
+h.AlphaData = isfinite(zs); 
+axis xy image
+
+%% 
+% If you have the Image Processing toolbox, you can try filling in the
+% missing pixels with |regionfill|: 
+
+zs_filled = regionfill(zs,isnan(zs)); 
+
+figure
+imagesc(xs,ys,zs_filled)
+axis xy image 
+
+%% 
+% And let's put it all together in one plot: 
+
+figure
+subplot(2,2,1)
+scatter(xi,yi,15,zi,'filled')
+title 'original scattered, interpolated data'
+axis equal off
+axis([-1 1 -1 1]*3)
+
+subplot(2,2,2) 
+pcolor(X,Y,Z)
+shading interp
+title '(original full resolution data)' 
+axis equal off
+axis([-1 1 -1 1]*3)
+
+subplot(2,2,3) 
+h=imagesc(xs,ys,zs); 
+h.AlphaData = isfinite(zs); 
+axis xy off
+title 'gridbin from scattered data' 
+axis equal
+axis([-1 1 -1 1]*3)
+
+subplot(2,2,4) 
+imagesc(xs,ys,zs_filled) 
+axis xy off
+title 'gridbin filled' 
+axis equal
+axis([-1 1 -1 1]*3)
+
+%% Example 2: Number of data points 
+% An optional second output from the |gridbin| function gives the number of
+% observations in each grid cell. So in the example above, we could have 
+% request the second output from the |gridbin| function like this: 
+
+[zs,N] = gridbin(xi,yi,zi,xs,ys); 
+
+figure
+imagesc(xs,ys,N)
+axis xy image
+title 'number of scattered datapoints in each grid cell.'
+colorbar
+
+%% Example 3: Other statistics
+% The |gridbin| function uses |accumarray| to accumulate the statistics of
+% all scattered points within each grid cell. By default |gridbin| assumes you want 
+% the mean z value in each grid cell, but you can just as easily request
+% other statistics, like standard deviation: 
+
+z_std = gridbin(xi,yi,zi,xs,ys,@std); 
+
+figure
+imagesc(xs,ys,z_std)
+axis xy image
+title 'standard deviation of all data points in each grid cell.'
+colorbar
+colormap cool
+
+%% Author Info
+% This function was written by Chad A. Greene of NASA's Jet Propulsion
+% Laboratory, August 2021. 
+
+##### SOURCE END #####
+--></body></html>
