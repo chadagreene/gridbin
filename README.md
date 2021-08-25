@@ -6,8 +6,6 @@ A _fast_ MATLAB function for gridding _very large_ datasets of scattered data. T
 3. **_`gridbin` can handle much larger scattered datasets_** than `griddata` or `gridfit`.
 4. **_`gridbin` can return statistics._** For example, `gridbin` can return the standard deviation of all scattered data points within a grid cell simply by adding `@std` to the function call. 
 
-![](gridbin.png) 
-
 ##  Syntax
 ```
  vq = gridbin(x,y,v,xq,yq) 
@@ -27,3 +25,5 @@ v within each spatial bin.
 `[vq,N] = gridbin(...)` also returns a grid N containing the number of
 observations v in each bin. 
 
+
+![](gridbin.png) 
