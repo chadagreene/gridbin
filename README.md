@@ -1,3 +1,4 @@
+[![View gridbin on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/98239-gridbin)
 # gridbin
 A _fast_ MATLAB function for gridding _very large_ datasets of scattered data. This function is somewhat similar to Matlab's built-in [`griddata`](https://www.mathworks.com/help/matlab/ref/griddata.html) or John D'Errico's [`gridfit`](https://www.mathworks.com/matlabcentral/fileexchange/8998), with the differences being that 
 
