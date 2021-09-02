@@ -48,6 +48,13 @@ assert(isequal(size(x),size(y),size(z)),'Error: Dimensions of x,y,z must all agr
    
 %% Operate on data: 
 
+clz = class(z); 
+if ismember(clz,{'single','double'})
+   FillVal = NaN; 
+else
+   FillVal = zeros(1,clz); 
+end
+
 if ~isvector(xq) 
    % assume xq,yq were created by [xq,yq] = meshgrid(xq_array,yq_array); 
    xq = xq(1,:); 
@@ -67,7 +74,7 @@ z(isn) = [];
 x = x - xq(1) + resx/2; % adding resx/2 centers coordinates x at the center of pixels. 
 y = y - yq(1) + resy/2; 
 
-vq = accumarray(floor([y/resy x/resx])+1,z,[length(yq) length(xq)],func,NaN);
+vq = accumarray(floor([y/resy x/resx])+1,z,[length(yq) length(xq)],func,FillVal);
 
 % Number of observations: 
 if nargout==2
