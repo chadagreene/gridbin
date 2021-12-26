@@ -48,6 +48,11 @@ assert(isequal(size(x),size(y),size(z)),'Error: Dimensions of x,y,z must all agr
    
 %% Operate on data: 
 
+% Columnate inputs: 
+x = x(:); 
+y = y(:); 
+z = z(:); 
+
 clz = class(z); 
 if ismember(clz,{'single','double'})
    FillVal = NaN; 
